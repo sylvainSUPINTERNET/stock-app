@@ -1,5 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { createClient } from "@supabase/supabase-js";
 import { DetailSymbolResponse, FinnhubCurrentPriceResponseAllSettled, getStockSymbol } from "~/services/finnhub.server";
 import { increasePercentForToday, statusStockColor } from "~/utils/computeStock";
 
@@ -7,13 +8,17 @@ import { increasePercentForToday, statusStockColor } from "~/utils/computeStock"
 
 type LoaderData = {
   data: Awaited<ReturnType<typeof getStockSymbol>>;
+  resp: boolean;
 }
 
 export const loader = async () => {
   return json<LoaderData>({
-    data: await getStockSymbol(["NVDA", "RE", "GWW"], "cg6ekq9r01qjg4hg7i6gcg6ekq9r01qjg4hg7i70")
+    data: await getStockSymbol(["NVDA", "RE", "GWW"], "cg6ekq9r01qjg4hg7i6gcg6ekq9r01qjg4hg7i70"),
+    resp: true
   });
 };
+
+
 
 
 
@@ -21,12 +26,31 @@ export default function Index() {
 /*   const {data} = useLoaderData();
  */
 
+  const supaClient = createClient("https://apdoqaanztaqwlxreavk.supabase.co", "");
+
+  supaClient.from("invest_follow").select("*").then((data) => {
+    console.log("ici");
+    console.log(data);
+  });
+
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
       <h1 className="text-3xl font-bold  bg-gray-100 m-5 rounded p-5">Stock</h1>
 
 
+
+
       <div className="container mx-auto">
+
+      <div className="p-5">
+        <h2 className="text-xl">Investment : 366</h2>
+        <hr className="mt-5 mb-5"></hr>
+        <div>
+          <h2 className="text-xl">Orders</h2>
+        </div>
+        <hr className="mt-5 mb-5"></hr>
+      </div>
+
         {
           // data.map((symbolResponse: FinnhubCurrentPriceResponseAllSettled, index:number) => {
             [
