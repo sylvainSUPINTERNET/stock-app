@@ -4,7 +4,7 @@ import { createClient } from "@supabase/supabase-js";
 import { DetailSymbolResponse, FinnhubCurrentPriceResponseAllSettled, getStockSymbol } from "~/services/finnhub.server";
 import { increasePercentForToday, statusStockColor } from "~/utils/computeStock";
 
-
+// {"error":null,"data":[{"id":1,"total_invest":677.63,"created_at":"2023-10-31T23:00:01+00:00","gain_stock":null,"gain_crypto":null}],"count":null,"status":200,"statusText":"OK"}
 
 type LoaderData = {
   data: Awaited<ReturnType<typeof getStockSymbol>>;
@@ -43,8 +43,13 @@ export default function Index() {
       <div className="p-5">
         <div className="flex justify-between">
           <p className="text-xl font-bold">TOTAL INVEST</p>
-          <input type="text-xl" value={`${report}`}></input>
+          <div>
+          <input type="text" defaultValue={`${report?.data[0]?.total_invest}`} 
+          onChange={ el => console.log("change")}></input>
+          <button className="hidden">Update</button>
+          </div>
         </div>
+
 
         <hr className="mt-5 mb-5"></hr>
 
