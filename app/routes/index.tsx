@@ -13,7 +13,7 @@ type LoaderData = {
 
 export const loader = async () => {
   return json<LoaderData>({
-    data: await getStockSymbol(["NVDA", "RE", "GWW"], "cg6ekq9r01qjg4hg7i6gcg6ekq9r01qjg4hg7i70"),
+    data: await getStockSymbol(["NVDA", "RE", "GWW"], ""),
     resp: true
   });
 };
@@ -43,11 +43,23 @@ export default function Index() {
       <div className="container mx-auto">
 
       <div className="p-5">
-        <h2 className="text-xl">Investment : 366</h2>
-        <hr className="mt-5 mb-5"></hr>
-        <div>
-          <h2 className="text-xl">Orders</h2>
+        <div className="flex justify-between">
+          <p className="text-xl font-bold">TOTAL</p>
+          <p className="text-xl">366 USD</p>
         </div>
+
+        <hr className="mt-5 mb-5"></hr>
+
+        <div className="flex justify-between">
+          <p className="text-xl font-bold">ORDERS</p>
+          <ul>
+            <li>Transaction 1</li>
+            <li>Transaction 1</li>
+            <li>Transaction 1</li>
+            <li>Transaction 1</li>
+          </ul>
+        </div>
+
         <hr className="mt-5 mb-5"></hr>
       </div>
 
